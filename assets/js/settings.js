@@ -141,7 +141,7 @@ nameInput.addEventListener("keyup", function(event) {
 });
 
 document.getElementById("newDocButton").addEventListener("click", function() {
-    if (window.location.pathname == "/settings.html") {
+    if (window.location.pathname == "/settings.html" || window.location.pathname == "/settings") {
         console.log(window.location.pathname);
         window.location.href = "/";
     }

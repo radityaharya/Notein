@@ -21,7 +21,7 @@ function loadSavedItemToEditor(savedData) {
 function LoadItemButtonHandler(id) {
     console.log("Button clicked");
     let savedData = getSavedDataFromLocalStorage(id);
-    if (window.location.pathname == "/settings.html") {
+    if (window.location.pathname == "/settings.html" || window.location.pathname == "/settings") {
         console.log(window.location.pathname);
         window.location.href = "/" + "?note=" + id;
         return;
