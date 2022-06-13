@@ -63,14 +63,17 @@ function saveActiveEditor() {
 
 
 function getAllSavedData() {
-    savedData = new Array();
+    let savedData = new Array();
     for (let i = 0; i < localStorage.length; i++) {
-        data = {
-            id: localStorage.key(i),
-            savedData: localStorage.getItem(localStorage.key(i)),
-        };
-        savedData.push(data);
+        if (localStorage.key(i).startsWith("doc")) {
+            data = {
+                id: localStorage.key(i),
+                savedData: localStorage.getItem(localStorage.key(i)),
+            };
+            savedData.push(data);
+        }
     }
+    console.log(savedData);
     return savedData;
 }
 
@@ -124,7 +127,12 @@ function filterSavedData(query) {
     let drawer = document.getElementById("savedDataDrawer");
     drawer.innerHTML = "";
     for (let i = 0; i < savedDatas.length; i++) {
-        dict = savedDatas[i].savedData;
+        // skip if doesnt start with "doc"
+        if (!savedDatas[i].id.startsWith("doc")) {
+            continue;
+        }
+
+        dict = JSON.parse(savedDatas[i].savedData);
         if (dict.blocks[0].data.text.toLowerCase().includes(query.toLowerCase())) {
             let li = document.createElement("li");
             li.className = "nav-link";
@@ -136,7 +144,7 @@ function filterSavedData(query) {
             icon.className = "bx bxs-file icon";
 
             span = document.createElement("span");
-            // title = dict.blocks[0].data.text
+
             span.innerText = dict.blocks[0].data.text.slice(0, 10);
             span.className = "text nav-text";
 
