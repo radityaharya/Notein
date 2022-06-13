@@ -124,7 +124,7 @@ function filterSavedData(query) {
     let drawer = document.getElementById("savedDataDrawer");
     drawer.innerHTML = "";
     for (let i = 0; i < savedDatas.length; i++) {
-        dict = JSON.parse(savedDatas[i].savedData);
+        dict = savedDatas[i].savedData;
         if (dict.blocks[0].data.text.toLowerCase().includes(query.toLowerCase())) {
             let li = document.createElement("li");
             li.className = "nav-link";
@@ -189,7 +189,7 @@ function loadProfilePicFromLocalStorage() {
     if (profilePicure) {
         profile_pics.src = profilePicure;
     } else {
-        profile_pics.src = "/assets/img/default_profile.jpg";
+        profile_pics.src = "./assets/img/default_profile.jpg";
 
     }
 }

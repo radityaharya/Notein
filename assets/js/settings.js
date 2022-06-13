@@ -6,7 +6,7 @@ function loadProfilePicFromLocalStorages() {
         profile_pic.src = profilePic;
     } else {
         console.log("No profile pic found");
-        profile_pic.src = "./assets/img/default_profile";
+        profile_pic.src = "./assets/img/default_profile.jpg";
     }
 }
 

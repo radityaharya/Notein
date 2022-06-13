@@ -4,7 +4,7 @@
     --color-text-primary-dark: rgb(255, 255, 255);
     --color-bg-main: #fff;
     --color-bg-dark: #242526;
-    --color-border-light: #E8E8EB;
+    --color-border-light: #acacac;
     --color-text-main: #000;
     /* ===== Colors Sidebar ===== */
     --sidebar-color: #FFF;
@@ -429,13 +429,13 @@ nav.dark {
     object-fit: cover;
 }
 
-@media (max-width: 830px) {
+@media screen and (min-width: 830px) {
     .editorjs {
-        padding-left: 150px;
+        padding-left: 120px;
     }
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
     .profile-wrapper,
     .profile-display,
     .import-container,
@@ -447,9 +447,11 @@ nav.dark {
     }
 }
 
-@media (max-width: 650px) {
+@media screen and (max-width: 650px) {
     .editorjs {
-        margin-left: 60px;
+        margin-left: 0px;
+        padding-left: 0px !important;
+        max-width: 100%;
     }
     .sidebar {
         width: 100%;
@@ -457,6 +459,7 @@ nav.dark {
     .sidebar.close {
         width: 5px;
         background: transparent !important;
+        outline: none !important;
     }
     .sidebar.close .menu-bar,
     .sidebar.close .image-text {
@@ -475,7 +478,7 @@ nav.dark {
     }
 }
 
-@media (max-width: 450px) {
+@media screen and (min-width: 450px) {
     .profile-wrapper,
     .import-container,
     .export-container {
