@@ -1,3 +1,12 @@
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function() {
+        navigator.serviceWorker
+            .register("/serviceWorker.js")
+            .then(res => console.log("service worker registered"))
+            .catch(err => console.log("service worker not registered", err))
+    })
+}
+
 var editor = new EditorJS({
     holder: "editorjs",
     readOnly: false,
@@ -73,10 +82,14 @@ var editor = new EditorJS({
         }],
     },
     onReady: function() {
-        saveActiveEditor();
         new Undo({
             editor,
         });
+
+        if (onLoadCheckQueryString()) {
+            newDoc();
+            saveActiveEditor();
+        }
         loadSavedDataToDrawer();
     },
     onChange: function(api, event) {
@@ -89,6 +102,7 @@ var editor = new EditorJS({
 });
 
 var currentId = null;
+
 var newDocButton = document.getElementById("newDocButton");
 
 newDocButton.addEventListener("click", newDoc);
@@ -136,144 +150,20 @@ function updateCurrentPageTitle() {
     });
 }
 
-function getSavedDataFromLocalStorage(id) {
-    let savedData = localStorage.getItem(id);
-    if (savedData) {
-        return JSON.parse(savedData);
-    }
-    console.log("No saved data found");
-    return null;
-}
-
-function loadSavedItemToEditor(savedData) {
-    currentId = savedData.blocks[0].data.text;
-    console.log("current id from loadsaved " + currentId);
-    editor.render(savedData);
-}
-
-function LoadItemButtonHandler(id) {
-    console.log("Button clicked");
-    let savedData = getSavedDataFromLocalStorage(id);
-    if (savedData) {
-        loadSavedItemToEditor(savedData);
-    }
-    currentId = id;
-}
-
-function getPageTitle() {
-    let title = document.getElementById("title").value;
-    return title;
-}
-
-
-function saveActiveEditor() {
-    console.log("current id from save active editor" + currentId);
-    editor.save().then((savedData) => {
-        console.log("Saved data called");
-
-        if (savedData.blocks.length == 0) {
-            console.log("No blocks found");
-            localStorage.removeItem(currentId);
-            newDoc();
-            return;
-        } else if (savedData.blocks[0].data.text == '<font color="#808080">Write your notes!</font>') {
-            return
-        }
-        savedData["favorite"] = false;
-        localStorage.setItem(currentId, JSON.stringify(savedData));
-        console.log(savedData);
-        console.log(savedData.blocks[0].data.text);
-        loadSavedDataToDrawer();
-    }).catch((error) => {
-        console.error("Saving error", error);
+function onLoadCheckQueryString() {
+    console.log("onLoadCheckQueryString");
+    const params = new Proxy(new URLSearchParams(window.location.search), {
+        get: (searchParams, prop) => searchParams.get(prop),
     });
-}
 
-
-function getAllSavedData() {
-    savedData = new Array();
-    for (let i = 0; i < localStorage.length; i++) {
-        data = {
-            id: localStorage.key(i),
-            savedData: localStorage.getItem(localStorage.key(i)),
-        };
-        savedData.push(data);
-    }
-    return savedData;
-}
-
-function loadSavedDataToDrawer() {
-    savedDatas = getAllSavedData();
-    let drawer = document.getElementById("savedDataDrawer");
-    drawer.innerHTML = "";
-    for (let i = 0; i < savedDatas.length; i++) {
-        dict = JSON.parse(savedDatas[i].savedData);
-
-        let li = document.createElement("li");
-        li.className = "nav-link";
-
-        link = document.createElement("a");
-        link.href = "#";
-
-        icon = document.createElement("i");
-        icon.className = "bx bxs-file icon";
-
-        span = document.createElement("span");
-        span.innerText = dict.blocks[0].data.text;
-        span.className = "text nav-text";
-
-        link.appendChild(icon);
-        link.appendChild(span);
-        li.appendChild(link);
-        drawer.appendChild(li);
-
-        li.onclick = function() {
-            LoadItemButtonHandler(savedDatas[i].id);
-        }
-    }
-
-}
-
-// var loadAllItemButton = document.getElementById("loadAllItemButton").addEventListener("click", function() {
-//     console.log("Load all items button clicked");
-//     loadSavedDataToDrawer();
-// });
-
-// var loadItemButton = document.getElementsByClassName("loadItemButton");
-// for (let i = 0; i < loadItemButton.length; i++) {
-//     loadItemButton[i].addEventListener("click", function() {
-//         LoadItemButtonHandler(loadItemButton[i].id);
-//     });
-// }
-
-
-
-//side-bar
-const body = document.querySelector('body'),
-    sidebar = body.querySelector('nav'),
-    toggle = body.querySelector(".toggle"),
-    searchBtn = body.querySelector(".search-box"),
-    modeSwitch = body.querySelector(".toggle-switch"),
-    modeText = body.querySelector(".mode-text");
-docdrawer = body.querySelector(".doc-drawer");
-
-toggle.addEventListener("click", () => {
-    sidebar.classList.toggle("close");
-    docdrawer.classList.toggle("close");
-})
-
-searchBtn.addEventListener("click", () => {
-    sidebar.classList.remove("close");
-    docdrawer.classList.remove("close");
-})
-
-modeSwitch.addEventListener("click", () => {
-    body.classList.toggle("dark");
-
-    if (body.classList.contains("dark")) {
-        modeText.innerText = "Light mode";
+    if (params.note) {
+        console.log("Loading note: " + params.note);
+        LoadItemButtonHandler(params.note);
+        currentId = params.note;
+        window.history.pushState("", document.title, window.location.pathname);
+        return false;
     } else {
-        modeText.innerText = "Dark mode";
-
+        console.log("No note specified");
+        return true;
     }
-});
+}

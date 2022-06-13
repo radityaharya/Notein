@@ -1,10 +1,9 @@
-/**
- * Styles for the example page
- */
-
 @import url(https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&display=swap);
  :root {
+    --color-text-primary-light: rgb(0, 0, 0);
+    --color-text-primary-dark: rgb(255, 255, 255);
     --color-bg-main: #fff;
+    --color-bg-dark: #242526;
     --color-border-light: #E8E8EB;
     --color-text-main: #000;
     /* ===== Colors Sidebar ===== */
@@ -24,6 +23,19 @@
     --bs-body-font-size: 1rem;
     --bs-body-font-weight: 400;
     --bs-body-line-height: 1.6;
+    --color-scroll-main: #707070
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--color-scroll-main);
+    border: 4px solid transparent;
+    border-radius: 8px;
+    background-clip: padding-box;
+}
+
+*::-webkit-scrollbar {
+    width: 16px;
+    background-color: rgba(255, 255, 255, 0)
 }
 
 .dark-mode {
@@ -52,24 +64,89 @@ body.dark {
     --text-color: #ccc;
 }
 
+svg {
+    fill: rgb(131, 131, 133) !important;
+}
+
+
+/* editorjs */
+
+.editorjs {
+    padding-left: 88px;
+}
+
+.settings {
+    width: 70%;
+    /* height: 60%; */
+    display: grid !important;
+    grid-template-rows: auto auto auto;
+    gap: 3rem;
+    padding: 40px;
+    margin: auto;
+    border-radius: 15px;
+    border: 1px solid #bfdef5;
+    background-color: #f8fcff;
+}
+
+span.btn.choose-file-button,
+#export-btn {
+    background-color: var(--primary-color) !important;
+    color: var(--color-bg-main) !important;
+}
+
+.profile-display .file-drop-area {
+    border: 0px;
+    /* justify-content: center; */
+}
+
+.profile-wrapper {
+    width: 100%;
+}
+
+.profile-display {
+    gap: 20px;
+}
+
+.cdx-block {
+    color: var(--color-text-primaryy);
+}
+
+.codex-editor {
+    color: var(--color-text-primary-light);
+}
+
+.codex-editor.dark .cdx-block {
+    color: var(--color-text-primary-dark);
+}
+
 .sidebar {
     position: fixed;
-    top: 0;
+    bottom: 0;
     left: 0;
-    height: 100%;
+    height: 95.5%;
     width: 250px;
-    padding: 10px 14px;
+    padding: 10px 14px 10px 14px;
     background: var(--sidebar-color);
     transition: var(--tran-05);
     z-index: 100;
+    outline: 0.1px solid var(--color-border-light);
 }
 
 .sidebar.close {
     width: 88px;
 }
 
+.doc-drawer {
+    /* max-height:  */
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin-bottom: 30px;
+}
+
 .doc-drawer.close {
     visibility: hidden;
+    display: none;
     height: 0px;
 }
 
@@ -178,7 +255,7 @@ body.dark .sidebar header .toggle {
 }
 
 .sidebar .menu {
-    margin-top: 40px;
+    margin-top: 0px;
 }
 
 .sidebar li.search-box {
@@ -233,7 +310,7 @@ body.dark .sidebar li a:hover .text {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 }
 
 .menu-bar::-webkit-scrollbar {
@@ -309,3 +386,113 @@ body.dark .switch::before {
 .menu-links {
     padding-left: 0;
 }
+
+body .container {
+    padding-left: 2rem;
+    /* padding-right: 0px !important; */
+    margin: 0px !important;
+}
+
+body .container.dark {
+    background-color: var(--color-bg-dark);
+}
+
+body .container.close {
+    padding-left: 15rem;
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 40px;
+    padding-right: 12px;
+    z-index: 80;
+    background-color: var(--color-bg-main);
+    border-bottom: 0.1px solid var(--color-border-light);
+}
+
+nav.dark {
+    background-color: var(--color-bg-dark);
+}
+
+.main-logo {
+    padding-top: 5px;
+    height: 100%;
+}
+
+.main-logo img {
+    width: 80px;
+    object-fit: cover;
+}
+
+@media (max-width: 830px) {
+    .editorjs {
+        padding-left: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+    .profile-wrapper,
+    .profile-display,
+    .import-container,
+    .export-container {
+        width: 360px;
+    }
+    input#name-input {
+        width: 180px;
+    }
+}
+
+@media (max-width: 650px) {
+    .editorjs {
+        margin-left: 60px;
+    }
+    .sidebar {
+        width: 100%;
+    }
+    .sidebar.close {
+        width: 5px;
+        background: transparent !important;
+    }
+    .sidebar.close .menu-bar,
+    .sidebar.close .image-text {
+        visibility: hidden;
+    }
+    .sidebar header .toggle {
+        right: -10px;
+    }
+    .sidebar.close .toggle {
+        left: 0;
+    }
+    .settings {
+        width: 95%;
+        margin: auto;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 450px) {
+    .profile-wrapper,
+    .import-container,
+    .export-container {
+        width: 275px;
+    }
+    .profile-display {
+        width: 100%;
+        flex-direction: column !important;
+        justify-content: center;
+    }
+    input#name-input {
+        width: 140px;
+    }
+    .profile-display .file-drop-area {
+        justify-content: center;
+    }
+}
+
+
+/*  */
