@@ -107,7 +107,7 @@ span.btn.choose-file-button,
     gap: 20px;
 }
 
-.ce-block {
+.cdx-block {
     color: var(--color-text-primaryy);
 }
 
@@ -115,7 +115,7 @@ span.btn.choose-file-button,
     color: var(--color-text-primary-light);
 }
 
-.codex-editor.dark .ce-block {
+.codex-editor.dark .codex-editor__redactor .ce-block {
     color: var(--color-text-primary-dark);
 }
 
