@@ -189,7 +189,8 @@ function loadProfilePicFromLocalStorage() {
     if (profilePicure) {
         profile_pics.src = profilePicure;
     } else {
-        profile_pics.src = "http://www.gravatar.com/avatar/?d=identicon";
+        profile_pics.src = "/assets/img/default_profile.jpg";
+
     }
 }
 
