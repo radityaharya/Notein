@@ -1,7 +1,7 @@
 {
     "name": "Notein",
     "short_name": "Notein",
-    "start_url": "index.html",
+    "start_url": "https://app.notein.space",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#db4938",
