@@ -10,7 +10,12 @@ function loadProfilePicFromLocalStorages() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+profile_pic.addEventListener("click", () => {
+    document.getElementById("fileinputpics").click();
+});
+
+
+document.addEventListener("DOMContentLoaded", function () {
     loadProfilePicFromLocalStorages();
 });
 
@@ -19,11 +24,11 @@ document.addEventListener("DOMContentLoaded", function() {
 form = document.getElementById("filedroparea");
 var importedDoc = null;
 
-form.addEventListener("change", function(event) {
+form.addEventListener("change", function (event) {
     file = event.target.files[0];
     reader = new FileReader();
     reader.readAsText(file);
-    reader.onload = function(event) {
+    reader.onload = function (event) {
         console.log(event.target.result);
         number_of_notes = JSON.parse(event.target.result).length;
         console.log(number_of_notes);
@@ -34,17 +39,18 @@ form.addEventListener("change", function(event) {
         confirmbtn.className = "btn btn-primary"
 
         confirmbtn.innerText = "Import"
-        confirmbtn.onclick = function() {
+        confirmbtn.onclick = function () {
             importDoc(importedDoc);
         }
 
-        document.getElementById("fileInfo").appendChild(confirmbtn);
 
-        warningMessage = document.createElement("span");
+        warningMessage = document.createElement("div");
         warningMessage.className = "text-danger";
         warningMessage.innerText = "Warning: This will overwrite all existing notes.";
 
         document.getElementById("fileInfo").appendChild(warningMessage);
+        
+        document.getElementById("fileInfo").appendChild(confirmbtn);
     }
 
 
@@ -90,7 +96,7 @@ function savedNotesToJsonFile() {
     return JSON.stringify(savedData);
 }
 
-document.getElementById("export-btn").addEventListener("click", function() {
+document.getElementById("export-btn").addEventListener("click", function () {
     let json = savedNotesToJsonFile();
     console.log(json);
     let blob = new Blob([json], { type: "application/json" });
@@ -107,7 +113,7 @@ document.getElementById("export-btn").addEventListener("click", function() {
 function loadPictureToLocalStorage(file) {
     let reader = new FileReader();
     reader.readAsDataURL(file);
-    reader.onload = function(event) {
+    reader.onload = function (event) {
         localStorage.setItem("profile_picture", event.target.result);
         loadProfilePicFromLocalStorages();
         loadProfilePicFromLocalStorage()
@@ -115,7 +121,7 @@ function loadPictureToLocalStorage(file) {
 }
 
 fileinputpic = document.getElementById("fileinputpic");
-fileinputpic.addEventListener("change", function(event) {
+fileinputpic.addEventListener("change", function (event) {
     loadPictureToLocalStorage(event.target.files[0]);
 });
 
@@ -126,7 +132,7 @@ function setNameValueFromLocalStorage() {
     }
 };
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     setNameValueFromLocalStorage();
 });
 
@@ -135,12 +141,12 @@ function setNameToLocalStorage(name) {
 };
 
 nameInput = document.getElementById("name-input");
-nameInput.addEventListener("keyup", function(event) {
+nameInput.addEventListener("keyup", function (event) {
     setNameToLocalStorage(event.target.value);
     setSidebarDisplayNameFromLocalStorage();
 });
 
-document.getElementById("newDocButton").addEventListener("click", function() {
+document.getElementById("newDocButton").addEventListener("click", function () {
     if (window.location.pathname == "/settings.html" || window.location.pathname == "/settings") {
         console.log(window.location.pathname);
         window.location.href = "/";
