@@ -1,3 +1,9 @@
+document.addEventListener("DOMContentLoaded", function() {
+    loadProfilePicFromLocalStorage();
+    setSidebarDisplayNameFromLocalStorage();
+    checkLastDarkMode();
+});
+
 function getSavedDataFromLocalStorage(id) {
     let savedData = localStorage.getItem(id);
     if (savedData) {
@@ -211,11 +217,7 @@ function setSidebarDisplayNameFromLocalStorage() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
-    loadProfilePicFromLocalStorage();
-    setSidebarDisplayNameFromLocalStorage();
-    checkLastDarkMode();
-});
+
 
 
 toggle.addEventListener("click", () => {
