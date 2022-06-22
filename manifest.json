@@ -2,7 +2,7 @@
     "name": "Notein",
     "short_name": "Notein",
     "start_url": "https://app.notein.space",
-    "display": "minimal-ui",
+    "display": "fullscreen",
     "background_color": "#000000",
     "theme_color": "#000000",
     "icons": [{
