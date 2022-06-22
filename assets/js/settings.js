@@ -37,7 +37,8 @@ form.addEventListener("change", function (event) {
 
         confirmbtn = document.createElement("div")
         confirmbtn.className = "btn btn-primary"
-
+        confirmbtn.id = "import-btn"
+        
         confirmbtn.innerText = "Import"
         confirmbtn.onclick = function () {
             importDoc(importedDoc);
@@ -51,6 +52,7 @@ form.addEventListener("change", function (event) {
         document.getElementById("fileInfo").appendChild(warningMessage);
         
         document.getElementById("fileInfo").appendChild(confirmbtn);
+        
     }
 
 
@@ -68,6 +70,7 @@ function loadImportedNotesToLocalStorage(importedDoc) {
     for (let i = 0; i < importedDoc.length; i++) {
         localStorage.setItem(importedDoc[i].id, importedDoc[i].savedData);
     }
+    document.getElementById("import-btn").innerHTML = "Import Complete";
 }
 
 function importDoc(importedDoc) {
